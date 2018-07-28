@@ -29,8 +29,15 @@ app.use(session(sess))
 
 
 var MongoClient = require('mongodb').MongoClient;
-var db,menu;
-var dbURL="mongodb://pizza1:pizza1@localhost:27017/pizzadb"
+var db,menu,dbURL;
+
+var env = process.argv.slice(2)
+
+if(env == "dev"){
+	dbURL = "mongodb://pizza1:pizza1@localhost:27017/pizzadb";
+} else {
+	dbURL = "mongodb://heroku_5xhmz61j:wordpass321@ds013956.mlab.com:13956/heroku_5xhmz61j"
+}
 
 
 MongoClient.connect(dbURL, 
@@ -40,8 +47,9 @@ MongoClient.connect(dbURL,
   db=database.db("pizzadb")
  
   // Start the application after the database connection is ready
-  app.listen(8000);
-  console.log("Listening on port 8000");
+  const PORT = process.env.PORT || 8000;
+  app.listen(PORT);
+  console.log("Listening on port "+PORT);
 });
 
 app.get('/', function(req, res){
