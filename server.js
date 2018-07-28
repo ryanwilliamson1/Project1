@@ -47,7 +47,7 @@ if(env == "dev"){
 		  console.log("Listening on port "+PORT);
 		});
 } else {
-	dbURL = "mongodb://heroku_5xhmz61j:wordpass321@ds013956.mlab.com:13956/heroku_5xhmz61j"
+	dbURL = "mongodb://admin:password123@ds013956.mlab.com:13956/heroku_5xhmz61j"
 	MongoClient.connect(dbURL, 
 					function(err, database) {
 	  if(err) throw err;
