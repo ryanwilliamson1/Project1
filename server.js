@@ -35,22 +35,31 @@ var env = process.argv.slice(2)
 
 if(env == "dev"){
 	dbURL = "mongodb://pizza1:pizza1@localhost:27017/pizzadb";
+	MongoClient.connect(dbURL, 
+					function(err, database) {
+		  if(err) throw err;
+
+		  db=database.db("pizzadb")
+		 
+		  // Start the application after the database connection is ready
+		  const PORT = process.env.PORT || 8000;
+		  app.listen(PORT);
+		  console.log("Listening on port "+PORT);
+		});
 } else {
 	dbURL = "mongodb://heroku_5xhmz61j:wordpass321@ds013956.mlab.com:13956/heroku_5xhmz61j"
-}
-
-
-MongoClient.connect(dbURL, 
+	MongoClient.connect(dbURL, 
 					function(err, database) {
-  if(err) throw err;
+	  if(err) throw err;
 
-  db=database.db("pizzadb")
- 
-  // Start the application after the database connection is ready
-  const PORT = process.env.PORT || 8000;
-  app.listen(PORT);
-  console.log("Listening on port "+PORT);
-});
+	  db=database.db("heroku_5xhmz61j")
+	 
+	  // Start the application after the database connection is ready
+	  const PORT = process.env.PORT || 8000;
+	  app.listen(PORT);
+	  console.log("Listening on port "+PORT);
+	});
+}
 
 app.get('/', function(req, res){
   res.sendFile(`${publicPath}/index.html`);
