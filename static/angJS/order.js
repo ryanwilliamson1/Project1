@@ -66,5 +66,38 @@ $scope.removeOrder = function(item){
   for (var i = 0, length = $scope.orders.length; i < length; i++) {
       $scope.editingData[i] = false;
   }
-}   
+}
+$scope.searchByDate = function() {
+	var datestring = $scope.orderDate
+	var date = new Date(Date.parse(datestring))
+	var date2 = new Date(Date.parse(datestring))
+	date2.setDate(date2.getDate() + 1)
+	console.log(date)
+	console.log(date2)
+
+	var query = {
+		date: {
+			$gte: { "$date" : date},
+			$lt: { "$date" : date2}
+    }
+}
+	
+	  $http({
+      method: 'POST',
+      url: '/searchByDate',
+      data: {date: date.valueOf()}
+  }).then(function successCallback(response) {
+	console.log(response)
+	$scope.orders=response.data
+}, function errorCallback(response) {
+    $scope.msg="Sorry, server problem, try again!"
+});
+
+
+  for (var i = 0, length = $scope.orders.length; i < length; i++) {
+      $scope.editingData[i] = false;
+  }
+}
+
+   
 })

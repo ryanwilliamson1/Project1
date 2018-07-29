@@ -121,10 +121,30 @@ app.get('/logout',function(req,res){
 
 
 app.get('/showOrders',function(req,res){
+	
 var query={}
       findOrderItems(res,query)
 })
 
+app.post('/searchByDate',function(req,res){
+	var date = new Date(req.body.date)
+	var date2 = new Date(req.body.date)
+	date2.setDate(date2.getDate() + 1)
+	console.log(date)
+	console.log(date2)	
+	var query = {
+		date: {
+			$gte:  date,
+			$lt: date2
+		}
+	}
+      orderFs.findOrderItems(res,query)
+})
+
+app.post('/placeOrder',function(req,res){
+	var data=req.body
+	orderFs.insertOrders(res,data)
+})
 
 
 //router step2: use the router, userAuth

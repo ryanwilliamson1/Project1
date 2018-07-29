@@ -45,7 +45,12 @@
 			</div>
 		</div>
 		<div class="content">
-			
+			<div class="row">
+				  <div class="col-md-3">Search orders of the date: </div>
+				  <input type="date" class="col-md-2 ng-valid ng-not-empty ng-dirty ng-valid-date ng-touched" ng-model="orderDate">
+				  <button class="btn btn-primary col-md-1 col-md-push-1" type="button" ng-click="searchByDate()">Search</button>
+				  
+				</div>
 			<table class="table table-hover">
 				<p>{{msg}}</p>
 				<tr>
